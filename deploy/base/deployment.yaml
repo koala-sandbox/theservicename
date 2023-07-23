@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: theservicename
+  labels:
+    app: theservicename
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: theservicename
+  template:
+    spec:
+      containers:
+      - name: theservicename
+        image: me-west1-docker.pkg.dev/koala-ops-demo-373407/koala-repo/theservicename:latest
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: theservicename-configmap
+    metadata:
+      labels:
+        app: theservicename
